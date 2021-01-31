@@ -1,2 +1,0 @@
-# BasektbAR
-Basketball AR game
