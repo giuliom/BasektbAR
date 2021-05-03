@@ -20,9 +20,18 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     protected Slider m_forceBar = null;
 
+    [SerializeField]
+    protected Button m_resetButton = null;
+
+    //TODO original transform for Basket, move elsewhere
+    protected Vector3 m_originalPositionOffset;
+    protected Quaternion m_originalRotationOffset;
+
     void Start()
     {
-        
+        //TODO move elsewhere
+        m_originalRotationOffset = Quaternion.Inverse(m_basket.transform.rotation) * m_player.transform.rotation;
+        m_originalPositionOffset = m_basket.transform.position - m_player.transform.position;
     }
 
     void Update()
@@ -65,5 +74,13 @@ public class UIManager : MonoBehaviour
         {
             m_forceBar.gameObject.SetActive(false);
         }
+    }
+
+    public void ResetScene()
+    {
+        //TODO move elsewhere
+        m_basket.transform.rotation = m_player.transform.rotation * m_originalRotationOffset;
+        Vector3 offset = m_player.transform.rotation * m_originalPositionOffset;
+        m_basket.transform.position = m_player.transform.position + offset;
     }
 }
