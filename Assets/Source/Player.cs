@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(BallLauncher))]
 public class Player : MonoBehaviour
@@ -21,13 +22,16 @@ public class Player : MonoBehaviour
     void Start()
     {
         m_ballLauncher = GetComponent<BallLauncher>();
+
+        Input.simulateMouseWithTouches = true;
     }
 
     void Update()
     {
         TouchPhase touch = TouchPhase.Canceled;
 
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 
+            && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) == false)
         {
             touch = Input.GetTouch(0).phase;
         }

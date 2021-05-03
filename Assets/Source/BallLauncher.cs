@@ -65,6 +65,8 @@ public class BallLauncher : MonoBehaviour
     public Ball LaunchBall(in int launcherId, in float force, in Vector3 direction)
     {
         Ball launchedBall = m_currentBall;
+        launchedBall.transform.parent = null;
+
         var rigidBody = m_currentBall.GetRigidbody();
         var collider = m_currentBall.GetSphereCollider();
 
@@ -105,6 +107,7 @@ public class BallLauncher : MonoBehaviour
         ball.ResetLauncherId();
         ball.ClearScoreListeners();
 
+        ball.transform.parent = m_launchPosition;
         ball.transform.position = m_launchPosition.position;
         ball.transform.rotation = m_launchPosition.rotation;
 
