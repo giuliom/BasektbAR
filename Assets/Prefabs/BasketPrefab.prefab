@@ -121,7 +121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 114390370}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.2513, z: -2.5946789}
+  m_LocalPosition: {x: 0, y: -0.2513, z: -2.9273014}
   m_LocalScale: {x: 0.25, y: 0.023001125, z: 3.9313326}
   m_Children: []
   m_Father: {fileID: 3543234028963113787}
@@ -298,7 +298,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 628483808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.26049998, z: -2.6287494}
+  m_LocalPosition: {x: 0, y: -0.26049998, z: -2.961372}
   m_LocalScale: {x: 0.3, y: 0.03, z: 4.717599}
   m_Children:
   - {fileID: 1292212830}
@@ -976,7 +976,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1407421539}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.008833334, y: -0.4235, z: -2.7073777}
+  m_LocalPosition: {x: 0.008833334, y: -0.455, z: -3.04}
   m_LocalScale: {x: 0.083333336, y: 0.125, z: 1.3104442}
   m_Children: []
   m_Father: {fileID: 3543234028963113787}
@@ -1355,7 +1355,7 @@ GameObject:
   - component: {fileID: 3543234028963113780}
   - component: {fileID: -3743526086069033678}
   m_Layer: 0
-  m_Name: Basket
+  m_Name: BasketPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1452,5 +1452,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6cfca5b48a0af4a9c629b1c6f4d327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_score: 0
   m_hoopCollider: {fileID: 4820560418779270370}
