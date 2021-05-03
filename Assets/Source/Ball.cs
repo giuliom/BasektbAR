@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public delegate void ScoreDelegate(int value);
+
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SphereCollider))]
 public class Ball : MonoBehaviour
 {
-    // Start is called before the first frame update
+    protected int m_launcherId = -1;
 
-    Rigidbody m_rigidbody;
-    SphereCollider m_sphereCollider;
+    Rigidbody m_rigidbody               = null;
+    SphereCollider m_sphereCollider     = null;
 
-    public Rigidbody GetRigidbody() { return m_rigidbody; }
-    public SphereCollider GetSphereCollider() { return m_sphereCollider; }
+    public event ScoreDelegate m_scoreEvent;
+
+    public int GetLauncherId()                  { return m_launcherId; }
+    public void SetLauncherId(in int id)        { m_launcherId = id; }
+    public void ResetLauncherId()               { m_launcherId = -1; }
+    public Rigidbody GetRigidbody()             { return m_rigidbody; }
+    public SphereCollider GetSphereCollider()   { return m_sphereCollider; }
 
     void Start()
     {
@@ -20,9 +27,17 @@ public class Ball : MonoBehaviour
         m_sphereCollider = GetComponent<SphereCollider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Score(in int value)
     {
-        
+        m_scoreEvent(value);
     }
+
+    public void ClearScoreListeners()
+    {
+        foreach (var d in m_scoreEvent.GetInvocationList())
+        {
+            m_scoreEvent -= (ScoreDelegate)d;
+        }
+    }
+
 }

@@ -1,67 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
+[RequireComponent(typeof(BallLauncher))]
 public class Player : MonoBehaviour
 {
-    public float m_force = 10f;
-    public GameObject m_ballPrefab;
+    [SerializeField]
+    protected int m_score = 0;
 
-    Ball m_currentBall;
-    float m_minimumY = -1000f;
-    List<GameObject> m_instancedBalls = new List<GameObject>();
+    BallLauncher m_ballLauncher = null;
 
+    [SerializeField]
+    protected float m_launchChargingMaxTimeS = 1.5f;
 
-    // Start is called before the first frame update
+    protected float m_chargingCounterS = -1f;
+
+    public int Score() { return m_score; }
+
     void Start()
     {
-        m_currentBall = GameObject.Instantiate(m_ballPrefab).GetComponent<Ball>();
+        m_ballLauncher = GetComponent<BallLauncher>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        bool touchPressed = false;
+        TouchPhase touch = TouchPhase.Canceled;
 
         if (Input.touchCount > 0)
         {
-            Touch t = Input.GetTouch(0);
-
-            touchPressed = t.phase == TouchPhase.Began;
+            touch = Input.GetTouch(0).phase;
         }
 
-        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.L) || touchPressed)
+        if (m_chargingCounterS >= 0f)
         {
-            LaunchBall();
+            m_chargingCounterS += Time.deltaTime;
         }
 
-        // TODO recycle balls
-        for (int i = m_instancedBalls.Count - 1; i >=0; --i)
+        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.L) || touch == TouchPhase.Began)
         {
-            GameObject ball = m_instancedBalls[i];
-
-            if (ball.transform.position.y < m_minimumY)
-            {
-                m_instancedBalls.RemoveAt(i);
-                Destroy(ball);
-            }
+            m_chargingCounterS = 0f;
         }
 
+        if (Input.GetMouseButtonUp(1) || Input.GetKeyUp(KeyCode.L) || touch == TouchPhase.Ended)
+        {
+            float launchForce = CurrentChargeUnary() * m_ballLauncher.MaxLaunchForce();
+            Vector3 launchDir = transform.forward + transform.up * 0.75f;
+
+            Ball ball = m_ballLauncher.LaunchBall(GetInstanceID(), launchForce, launchDir);
+            ball.m_scoreEvent += ScoredEvent; 
+
+            m_chargingCounterS = -1f;
+        }
     }
 
-    // TODO quick hack to have something working
-    void LaunchBall()
+    public float CurrentChargeUnary()
     {
-        var rigidBody = m_currentBall.GetRigidbody();
-        var collider = m_currentBall.GetSphereCollider();
+        Assert.AreNotEqual(0f, m_launchChargingMaxTimeS);
 
-        collider.enabled = true;
-        rigidBody.useGravity = true;
+        float charge = 0f;
 
-        Vector3 force_vec = (transform.forward + transform.up * 0.5f) * m_force;
-        rigidBody.AddForce(force_vec, ForceMode.Impulse);
+        if (m_chargingCounterS >= 0f)
+        {
+            charge = Mathf.Clamp(m_chargingCounterS, 0, m_launchChargingMaxTimeS) / m_launchChargingMaxTimeS;
+        }
 
-        m_instancedBalls.Add(m_currentBall.gameObject);
-        m_currentBall = GameObject.Instantiate(m_ballPrefab).GetComponent<Ball>(); ;
+        return charge;
+    }
+
+    void ScoredEvent(int value)
+    {
+        m_score += value;
     }
 }
