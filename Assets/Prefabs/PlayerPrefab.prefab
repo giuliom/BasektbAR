@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1776186906
+--- !u!1 &1563074789
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1776186907}
+  - component: {fileID: 1563074790}
   m_Layer: 0
   m_Name: LaunchPosition
   m_TagString: Untagged
@@ -16,15 +16,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1776186907
+--- !u!4 &1563074790
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776186906}
+  m_GameObject: {fileID: 1563074789}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.02, z: 1.71}
+  m_LocalPosition: {x: 0, y: -0.161, z: 0.23500001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6260971159174031819}
@@ -59,7 +59,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -1, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1776186907}
+  - {fileID: 1563074790}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -89,9 +89,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b328a2552bf55f944951c121fe627e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ballPrefab: {fileID: 3845379459467933673, guid: 42ee5b5feeb3e1f46948333cdee9ddae, type: 3}
-  m_launchPosition: {fileID: 1776186907}
-  m_maxLaunchForce: 25
+  m_ballPrefab: {fileID: 8679003568427368431, guid: 42ee5b5feeb3e1f46948333cdee9ddae, type: 3}
+  m_launchPosition: {fileID: 1563074790}
+  m_maxLaunchForce: 10
   m_minimumPositionY: -1000
   m_maxDistance: 1000
   m_ballPoolSize: 10

@@ -28,6 +28,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // Updating the transform based on the Main Camera, this has to be done due to how AR scaling is handled
+        Transform cameraTransform = Camera.main.transform;
+        transform.position = cameraTransform.position;
+        transform.rotation = cameraTransform.rotation;
+
         TouchPhase touch = TouchPhase.Canceled;
 
         if (Input.touchCount > 0 
@@ -49,9 +54,8 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonUp(1) || Input.GetKeyUp(KeyCode.L) || touch == TouchPhase.Ended)
         {
             float launchForce = CurrentChargeUnary() * m_ballLauncher.MaxLaunchForce();
-            Vector3 launchDir = transform.forward + transform.up * 0.75f;
 
-            Ball ball = m_ballLauncher.LaunchBall(GetInstanceID(), launchForce, launchDir);
+            Ball ball = m_ballLauncher.LaunchBall(GetInstanceID(), launchForce, transform.forward, transform.up);
             ball.m_scoreEvent += ScoredEvent; 
 
             m_chargingCounterS = -1f;

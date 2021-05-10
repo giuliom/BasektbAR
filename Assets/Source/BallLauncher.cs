@@ -14,6 +14,9 @@ public class BallLauncher : MonoBehaviour
     protected float m_maxLaunchForce = 100f;
 
     [SerializeField]
+    protected float m_launch_vertical_component_unary = 0.85f;
+
+    [SerializeField]
     protected float m_minimumPositionY = -1000f;
 
     [SerializeField]
@@ -62,7 +65,7 @@ public class BallLauncher : MonoBehaviour
         }
     }
 
-    public Ball LaunchBall(in int launcherId, in float force, in Vector3 direction)
+    public Ball LaunchBall(in int launcherId, in float force, in Vector3 direction, in Vector3 up)
     {
         Ball launchedBall = m_currentBall;
         launchedBall.transform.parent = null;
@@ -73,7 +76,9 @@ public class BallLauncher : MonoBehaviour
         collider.enabled = true;
         rigidBody.useGravity = true;
 
-        rigidBody.AddForce(direction * force, ForceMode.Impulse);
+        Vector3 launchDir = direction + up * m_launch_vertical_component_unary;
+
+        rigidBody.AddForce(launchDir * force, ForceMode.Impulse);
 
         launchedBall.SetLauncherId(launcherId);
         ReplaceCurrentBall();
