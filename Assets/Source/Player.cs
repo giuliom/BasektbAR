@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
 
     protected float m_chargingCounterS = -1f;
 
+    protected float m_ARScaling = 1f;
+
     public int Score() { return m_score; }
 
     void Start()
@@ -24,15 +26,13 @@ public class Player : MonoBehaviour
         m_ballLauncher = GetComponent<BallLauncher>();
 
         Input.simulateMouseWithTouches = true;
+
+        // Real world distances are scaled through the scaling of the AR Camera
+        m_ARScaling = Camera.main.transform.parent.transform.localScale.x;
     }
 
     void Update()
     {
-        // Updating the transform based on the Main Camera, this has to be done due to how AR scaling is handled
-        Transform cameraTransform = Camera.main.transform;
-        transform.position = cameraTransform.position;
-        transform.rotation = cameraTransform.rotation;
-
         TouchPhase touch = TouchPhase.Canceled;
 
         if (Input.touchCount > 0 
@@ -79,5 +79,10 @@ public class Player : MonoBehaviour
     void ScoredEvent(int value)
     {
         m_score += value;
+    }
+
+    public float RealDistanceFromBasket(in Basket b)
+    {
+        return Vector3.Distance(b.transform.position, transform.position) / m_ARScaling;
     }
 }

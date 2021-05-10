@@ -48,12 +48,15 @@ public class UIManager : MonoBehaviour
 
     protected void UpdateDistance()
     {
-        float distance = Vector3.Distance(m_basket.transform.position, m_player.transform.position);
+        float distance = m_player.RealDistanceFromBasket(m_basket);
         int centimeters = Mathf.RoundToInt(distance * 100);
 
         if (centimeters >= 100)
         {
-            m_distanceText.text = centimeters / 100 + "." + centimeters % 100  + "m";
+            int remainder = centimeters % 100;
+            string sremainder = "." + (remainder < 10 ? "0" : "") + remainder;
+
+            m_distanceText.text = centimeters / 100 + sremainder + "m";
         }
         else
         {
